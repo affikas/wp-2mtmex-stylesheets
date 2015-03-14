@@ -1,0 +1,3 @@
+[submodule "dcww"]
+	path = dcww
+	url = https://github.com/S64/dcww.git
