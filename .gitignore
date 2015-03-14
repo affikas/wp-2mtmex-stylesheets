@@ -9,6 +9,6 @@ Thumbs.db
 /Gemfile.lock
 
 !/gulpfile.ts
-/gulpfile.js
+!/gulpfile.js
 
 /tsconfig.json
