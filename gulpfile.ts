@@ -11,9 +11,19 @@ var ts          = require('gulp-typescript');
 */
 
 var paths = {
-  scripts_ts:  'assets/scripts/**/*.ts',
-  styles_sass: 'assets/styles/**/*.{sass, scss}'
+  scripts_ts:  'src/assets/scripts/**/*.ts',
+  styles_sass: 'src/assets/styles/**/*.{sass, scss}'
 };
+
+var dest_paths = {
+  scripts: 'dist/scripts',
+  styles:  'dist/styles'
+}
+
+var filter_paths = {
+  scripts: 'dist/scripts/**/*.js',
+  styles:  'dist/styles/**/*.css'
+}
 
 var sassOptions = {};
 
@@ -38,8 +48,8 @@ gulp.task('styles', () => {
     .pipe($.sourcemaps.init())
     .pipe($.sass(sassOptions))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('dist/styles'))
-    .pipe($.filter('**/*.css'))
+    .pipe(gulp.dest(dest_paths.styles))
+    .pipe($.filter(filter_paths.styles))
     .pipe(browserSync.reload({
       stream: true
     }));
@@ -53,8 +63,8 @@ gulp.task('scripts', () => {
     .pipe($.typescript(tsProject))
     .pipe($.traceur(traceurOptions))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('dist/scripts'))
-    .pipe($.filter('**/*.js'))
+    .pipe(gulp.dest(dest_paths.scripts))
+    .pipe($.filter(filter_paths.scripts))
     .pipe(browserSync.reload({
       stream: true
     }));
