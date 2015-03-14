@@ -11,6 +11,7 @@
   },
   "homepage": "https://github.com/affikas/wp-2mtmex-stylesheets",
   "dependencies": {
+    "browser-sync": "^2.2.4",
     "gulp": "^3.8.11",
     "gulp-traceur": "^0.17.0",
     "gulp-typescript": "^2.4.2"
