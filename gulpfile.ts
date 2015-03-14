@@ -9,6 +9,23 @@ var traceur     = require('gulp-traceur');
 var filter      = require('gulp-filter');
 var bowerFiles  = require('main-bower-files');
 
+var sassOptions  = {};
+var bowerOptions = {};
+
+var tsProject = ts.createProject({
+  target: 'ES6',
+  module: 'commonjs',
+  declarationFiles: false,
+  noImplicitAny: false,
+  removeComments: false,
+  noLib: false,
+  sortOutput: true
+});
+
+var traceurOptions = {
+  modules: 'commonjs'
+};
+
 var paths = {
   scripts_ts:  'src/assets/scripts/**/*.ts',
   styles_sass: 'src/assets/styles/**/*.{sass, scss}',
@@ -26,23 +43,6 @@ var filter_paths = {
   styles:  'dist/styles/**/*.css',
   bower:   'dist/bower_components/**/*'
 }
-
-var sassOptions  = {};
-var bowerOptions = {};
-
-var tsProject = ts.createProject({
-  target: 'ES6',
-  module: 'commonjs',
-  declarationFiles: false,
-  noImplicitAny: false,
-  removeComments: false,
-  noLib: false,
-  sortOutput: true
-});
-
-var traceurOptions = {
-  modules: 'commonjs'
-};
 
 gulp.task('styles', () => {
   return gulp.src([
