@@ -7,3 +7,5 @@ Thumbs.db
 
 !/gulpfile.ts
 /gulpfile.js
+
+/tsconfig.json
