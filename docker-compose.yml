@@ -1,0 +1,16 @@
+wp-2mtmex-stylesheets:
+  hostname: wp-2mtmex-stylesheets.local
+  build: ./dcww/
+  ports:
+    - 80:80
+  privileged: true
+  environment:
+    WP_URL: wp-2mtmex-stylesheets.local
+    WP_TITLE: wp-2mtmex-stylesheets_docker
+    WP_USER: admin
+    WP_PASSWORD: admin
+    WP_EMAIL: example@example.com
+    WP_LOCALE: ja
+  volumes:
+    - ./dist:/var/www/html/wp-content/plugins/wp-2mtmex-stylesheets
+    - ./dcww/volumes/nginx_conf.d:/etc/nginx/conf.d

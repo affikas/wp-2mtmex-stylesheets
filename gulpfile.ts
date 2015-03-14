@@ -111,7 +111,8 @@ gulp.task('jade', () => {
 
 gulp.task('serve', ['default'], () => {
   browserSync({
-    server: 'dist'
+    server: 'dist',
+    proxy: 'wp-2mtmex-stylesheets.local'
   });
 
   gulp.watch([
