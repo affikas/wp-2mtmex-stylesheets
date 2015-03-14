@@ -1,0 +1,18 @@
+{
+  "name": "wp-2mtmex-stylesheets",
+  "version": "0.0.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/affikas/wp-2mtmex-stylesheets.git"
+  },
+  "bugs": {
+    "url": "https://github.com/affikas/wp-2mtmex-stylesheets/issues"
+  },
+  "homepage": "https://github.com/affikas/wp-2mtmex-stylesheets",
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "gulp-traceur": "^0.17.0",
+    "gulp-typescript": "^2.4.2"
+  }
+}
