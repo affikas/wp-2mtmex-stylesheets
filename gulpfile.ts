@@ -1,14 +1,13 @@
 declare var require;
 
 var gulp        = require('gulp');
-var $           = require('gulp-load-plugins');
+//var $           = require('gulp-load-plugins');
 var browserSync = require('browser-sync');
-/*
+var ts          = require('gulp-typescript');
 var sass        = require('gulp-sass');
 var sourcemaps  = require('gulp-sourcemaps');
 var traceur     = require('gulp-traceur');
-var ts          = require('gulp-typescript');
-*/
+var filter      = require('gulp-filter');
 
 var paths = {
   scripts_ts:  'src/assets/scripts/**/*.ts',
@@ -27,7 +26,7 @@ var filter_paths = {
 
 var sassOptions = {};
 
-var tsProject = $.typescript.createProject({
+var tsProject = ts.createProject({
   target: 'ES6',
   module: 'commonjs',
   declarationFiles: false,
@@ -45,11 +44,11 @@ gulp.task('styles', () => {
   return gulp.src([
     paths.styles_sass
   ])
-    .pipe($.sourcemaps.init())
-    .pipe($.sass(sassOptions))
-    .pipe($.sourcemaps.write())
+    .pipe(sourcemaps.init())
+    .pipe(sass(sassOptions))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(dest_paths.styles))
-    .pipe($.filter(filter_paths.styles))
+    .pipe(filter(filter_paths.styles))
     .pipe(browserSync.reload({
       stream: true
     }));
@@ -59,22 +58,31 @@ gulp.task('scripts', () => {
   return gulp.src([
     paths.scripts_ts
   ])
-    .pipe($.sourcemaps.init())
-    .pipe($.typescript(tsProject))
-    .pipe($.traceur(traceurOptions))
-    .pipe($.sourcemaps.write())
+    .pipe(sourcemaps.init())
+    .pipe(ts(tsProject))
+    .pipe(traceur(traceurOptions))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(dest_paths.scripts))
-    .pipe($.filter(filter_paths.scripts))
+    .pipe(filter(filter_paths.scripts))
     .pipe(browserSync.reload({
       stream: true
     }));
 });
 
-gulp.task('serve', () => {
+gulp.task('serve', ['default'], () => {
   browserSync({
     server: 'dist'
   });
 
-  gulp.watch([paths.styles_sass], ['styles']);
-  gulp.watch([paths.scripts_ts],  ['scripts']);
+  gulp.watch([
+    paths.styles_sass
+  ], ['styles']);
+
+  gulp.watch([
+    paths.scripts_ts
+  ],  ['scripts']);
 });
+
+gulp.task('default', [
+  'scripts', 'styles'
+]);
