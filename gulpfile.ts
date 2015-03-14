@@ -7,23 +7,28 @@ var sass        = require('gulp-sass');
 var sourcemaps  = require('gulp-sourcemaps');
 var traceur     = require('gulp-traceur');
 var filter      = require('gulp-filter');
+var bowerFiles  = require('main-bower-files');
 
 var paths = {
   scripts_ts:  'src/assets/scripts/**/*.ts',
-  styles_sass: 'src/assets/styles/**/*.{sass, scss}'
+  styles_sass: 'src/assets/styles/**/*.{sass, scss}',
+  bower:       bowerFiles(bowerOptions)
 };
 
 var dest_paths = {
   scripts: 'dist/scripts',
-  styles:  'dist/styles'
+  styles:  'dist/styles',
+  bower:   'dist/bower_components'
 }
 
 var filter_paths = {
   scripts: 'dist/scripts/**/*.js',
-  styles:  'dist/styles/**/*.css'
+  styles:  'dist/styles/**/*.css',
+  bower:   'dist/bower_components/**/*'
 }
 
-var sassOptions = {};
+var sassOptions  = {};
+var bowerOptions = {};
 
 var tsProject = ts.createProject({
   target: 'ES6',
@@ -68,6 +73,17 @@ gulp.task('scripts', () => {
     }));
 });
 
+gulp.task('bower', () => {
+  return gulp.src([
+    paths.bower
+  ])
+    .pipe(gulp.dest(dest_paths.bower))
+    .pipe(filter(filter_paths.bower))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
+});
+
 gulp.task('serve', ['default'], () => {
   browserSync({
     server: 'dist'
@@ -80,8 +96,12 @@ gulp.task('serve', ['default'], () => {
   gulp.watch([
     paths.scripts_ts
   ],  ['scripts']);
+
+  gulp.watch([
+    paths.bower
+  ], ['bower']);
 });
 
 gulp.task('default', [
-  'scripts', 'styles'
+  'bower', 'scripts', 'styles'
 ]);
